@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Image Layout</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Wedding album design portfolio by The Image Layout.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<script>
+document.documentElement.classList.add('js');
+/* animations forced on by the visitor (button in the notice bar) */
+try{ if(localStorage.getItem('til-motion')==='on') document.documentElement.setAttribute('data-motion','on'); }catch(e){}
+</script>
+<noscript><style>.rv,.hero .w>span{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}</style></noscript>
+<style>
+/* ==========================================================================
+   THE IMAGE LAYOUT - Album Design Portfolio
+   Layout concept: a studio table. Printed layout sheets are dealt onto the
+   page in the hero, then each album is shown as flat spreads that wipe in
+   while you scroll. Brand colours (soft grey-beige + cocoa brown) are kept
+   from the original PDF; the maroon comes from the album backgrounds.
+
+   HOW TO EDIT: change text directly in the HTML below. Look for the
+   "EDIT" comments. Colours and fonts live in the :root block right here.
+   ========================================================================== */
+:root{
+  /* colour tokens (light) */
+  --bg:#ebe9ea;          /* page ground, same grey-beige as the PDF */
+  --bg-2:#e0dcdd;        /* image placeholder / quiet panels */
+  --fg:#6f5648;          /* body text, cocoa brown from the PDF */
+  --fg-strong:#47342a;   /* headings */
+  --muted:#7b695f;       /* captions */
+  --line:rgba(111,86,72,.24);
+  --accent:#7d1f2e;      /* maroon from the album backgrounds */
+  --on-accent:#fff;
+  --band-bg:#1b1315;     /* dark band behind the Wedding Albums section */
+  --band-fg:#efe5de;
+  --band-muted:#bba99f;
+  --navy:#262541;        /* logo tile colour from the contact page */
+  --shadow:rgba(52,30,20,.42);
+  /* type tokens */
+  --font-display:'Italiana','Didot','Bodoni 72',Georgia,serif;
+  --font-body:'Jost','Helvetica Neue',Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  /* logo (used as a mask so it can take any colour) */
+  --logo:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFXCAQAAAAlwBwmAAAa5UlEQVR42u2de5AlVX3HP6e77yzsg11lAVeRXShAHqI8FNGYFEbF4iEGUKlQRk2ClrESI5VoVIqYQmMFQ4IaIJakMClUoBBFcYEorgQIbhB2FRAXUVgWhF2WZR+zs7tzb3ef/NE9M3d2d6bPnem+tx/f7y2Wedy53bf709/7Pb9z+hzDLbyRNh6WbNkpv7OOfzO731invZz+tXt7jusrWOd3NtXvYgyjfIhV+ERIM1TAIg7UYSiJdrCvDsJsgQ6BCE+HYsCyGNry5tkDbQGD0aEYuAwmhxjUcHk6hKVyaZ0NAS2gJQFdVqClWQMtlQnoWAdBDi2PlgS0MrQihySHlkNLPShWhhbQ8mZJQCtDK0NLAroSQCu1KXjUSMlou3ygNpknJ78hUC6vFGN32wuTCVP+g7TMXn+257bsuEML6lkBPQfwCxlt5/KaMzl51jEolTlOmT1uDojHf6aRj7M6sG/jUDpTorbnPRnW+Rl2L57pupWpX81jlL/mNOJpgbUYfs1zDKXdyRaIibCEWGJi4kn/j4ixROPf29Qt4/Fca9Pf2fG/tF3f292+j7ueb7tebWKrye+iSc9tcz8jGkTaPP0Tls4kWCY/YiJCzgKG8OR4zYocPgY7ftLL7w0+ITsc4sYIwxhi7DS3L5iCEv5UqTz76MZy59kCXb2bfmK2OTxrJ8OZGKnCU0Ogq6hNGX5qMexga5pPpQapmh0r2xwCwqhDMJEEdCnUhmlrARZoswPVdAV0JbTTIf3uZJfqGwK6GtpFmPmcHXutrksCuoTaQSfTfXcRy6EFdPllgZB2Zj5u6+QK6KoocogcWQ1HSUCXyKVjJ6AlAV0JhQ4NPjUJBXSFIocb0GoUCuhKKM4YgWLl0AK6WkBnNwo107KArlDkiMgq26m+IaAroYl777JcXBLQlYF6elyNHFpA10nF3L8tCejCgJX/Sg1yaOTQAlpASwJ6YLBm4+rr5ApovTNJp72kDh3o5AroqmRjLyNQGEUOAV09hzaZGVrFPQFdkb3O3m9FDgFdIYf2BbRUn9PuCrTt6z51N1U1BZmAzjly+Clmtk8XWLTbgKlAi7QJaHegfUeg+7M3lpCAQzmCV9BiE79mLZsBX7cZCGgX+Q64tvq2LxEBF/Bu3sji9GdtHuJ2rmWtBrJKLs3YV/F8upzD3h8hljsxfZi93wdO4M50uxEhIWG63MQzfBi3TiCp4UAf5QD0T/AKh8kDTmM9lg6drhVVYsJ0yYzL0zUSJGkaiI5mUybQ9xIUDLQBTuFFLO0p9qKD5VLUayllAH0sW7rWqto70PfRKhRog8dCfplubarFi0IsZ6KhUn3Fo1pKxnK49BQW+958Yj7GMYTT+G9yOX2eBWh8toCeFlY/s3bQcnjObI5bxIFc0LV+2NQ1kOM5i1ixQ0BPh4nL8NGg0ONmeQNHZSz/CUnR7nTNgyqgsxzaLZYU9UFvgZMg06GTPTiWRUTK0QJ6NvnYK9ShLbDUOfMvZpFQE9CzA9oU/N4M850/AYY09k9AZwFtM99Zsc0wyzZcu7VHHSaXlBoNtIuDFt2pstY5nDzPi2hMh4CeUr4TckW/t585NfQs8DBbCy0iShUHevCdFBbDz3gUL3OAqEfMctSxIqBLvdcxPpu4LjNIRHg8wB0YpWgBPX3kyKoAFz3SLsLjalYSTINqjCHk0+xQDVpAlztyJM48wkd4noBwrz4dEePxaVbozhVpenc+f9oxbsnA0t9wcOEXbAC8kSewxHSIiNNHRIcOlpiLoQ+3GUgVB/qCkgCdvP5SbhofER0Sjo/TfoxzhLPkAvT7SwP0WE38TG7g1+xKt7+eu/g4+wOBcO6vgsrudXZVtz913xAPWM5yDuFgXsoQW1jPb2gDnmobAjqvRmH/lq2I08+NdaybdGQjzcshoN2Ta5aivlYWovQe87FpC2J5s4DuDegsl7Z9LpVpIaPKeF0199rqA18OXSWgs/wwmVnODuT4mUnN0ij3vUjCzd5XYzTpWruRgK5Wo9BM6879SrGDScr67GmgQ3f64FHz+AAL6EA6R0hEnP4bY4mJiPC5kw053iTrEXMuZ7Ajna+pk04+FhMS0qbDKJZN/JiO8K6CfOAibDrV1tQTzaxkqOCJZuAgtkyzF2OP03Jtq/jAFzO3+SD70cghq0Floc5SP6rAMZuZv8cwfzPpGUUMTBohTCe42VuGjgh4hl3NnDqhvkCHfUmayVSM3jRZ3mWBo963GkyzikGMYbSpgcOrMdB24B+5ZreFKvKMO9NvtQzvXkDndELHIoctxX4MRo3tp6yzQ1fp8sv7FSOQQ9drr8OKwprPVuXQtWvKhlCSdr4R0AJ6allgyOF5nUqimpciAV03h65z2co4XfYCujIacjipndI46CAiRyygq6SsNQgt0K6Qn+b7ilZAV9GhyxE5zECAdptRT0DXJkObJjeLBHT1TpXLsseaq0hAV0YuPYXliRyezpqAnv1e17lrQZPXzDiNlvNkugDd7NuUlKErdapcu77r6qeKHDU7NC5AR6VB1dTiIhLQhTm0IXA4ZeWJHIPoKRTQSv5qFApo7bUih9DI4WS51KFtjYH2BHTzHNr0AVMzoLEcxmHPBHTN9tqnyRLQtTtdfqPh8gR0leRSkgtKA6w6VgR0Dhqq8VkzQr5eb9ylgtGqEH7K0A0HOnIAfg70ae4k2/dj7Dk9wwroqvhz6IDZvvSjdFdWJ2xs6a6aDu0ykm7fUniULQxXRY6aAG2wtB1QSYA2Be+LCzyDGJykRmGlWvguUxTM68u+lLGnUA5dsQRtnSLHfFoNXjnQpbEqoEtzqjoOz5nH3JJM+j2IjhVFjkppu1OjcH5tIwcCun5AZzcKi18HalC3YClD1yxyDDs8Zz6LSrTHAlpAT6OdDk3HuexXkshRhUtEQA9UmzNOarJW35LannqXOrQR0NXRC07PenlJnNIbwHYVOSqlYcDLbBYeTF1rsW4OrTp0ZfQiuxyedTAt4hJ4lanAKwrogckCwwxnOJABDmFewS5V3kahV+KRgAJ6L5FjU0ac8IClvKRgNytvhlajsGIOvSnzlMcs4oiafjy7NQqVoSuzzyOZDp389pjKpeO8tus3tfO7ig7tE7PW6bknFuxT5Zx91NDgWUmqeh0/gcv8QScxpwQfvCbnC1oZumZAW+BpQgegl3IstoYfvi6Rw5Rk8KyAdgL6SUYyulYMEfN4faHvsdxlOzl0RRQDT/KiE/hvpsipz8s7fFRAV8qhPbawJhNVDziZlxEP+F16A9mmgK5YhnzY4Vkxh3NigXWGMpftENDVStGryK5zxHicyaC7GAYTOVSHrphWZzYLk3d3FvuXYohSv4GWQ1esWfg0D2V6r0fMIZxd2Pssb5UjUIaulnx2cb9DBcMC78MrqCZrSnuMFTkq96FruYcoEymPmFN4C3HDmkmKHBUMHQ/yDH6GRxti5nIhfiE5uswrySpyVEoWj6d4wCF0+EScxxtqBbTuWKkl0JbbHN6BwdDiM1qXRECXWxFwBxscbpb1iDmDcwrJ0aaEZ82gnsKKevSz3E72AhXJPNGfY//cR96VN0OrUVhBGeAbRA7vwSfiaC4Z0KiOwUwFJoeunGIMK/kpnoNH+0T8Fe8izDV2lHcshyaaqWToCBjhW471C4PhSg4jynFJzjLPPiqHrqBCDDfwBMZhzLNHzMH8F4sy73Upv0drPHRNgbZ4bOarjtNe+YS8ma8yhOnr+9aiQQK6pxx9LWsyewwTBYScz5V4OdU7vAEdY0WO2gKdePRluN5o5dPhQ3wlHStdVcmha/zGY3xu4i4Ch1oHGFqE/AXXsYA4x+Zh9ZAX0KX1aBjhs06LcY4Fj4gL+DavIKQ1q1M/qCqH57DNhi6OXIePpgifu/mSY44eCx6n8SPeQod63n8nh6547PD4AqvxnZbkBGgRcjTf55P4RAQzPA7lXUlWZbuKxw7DVj7GNoehShPBI2Y+l/F9jickrt1NSwK64rGjxb18Bq+HaWU8LCGnczeXcAAhyQRaZc/QbnPbGd2CVXWF+FzNNfiZCyd3n/aAiAVcyo+5kIAIS6uHY6KZkwR0gbEjBi7ih7Sck3TSQLR0OI5ruJv3sh8d4pxnV9bCmwJ6xkl6hD9jtWNNeuLkt4iIOIUbuY2PsISIGPB7jiBlyshy6JpUO37HeTzSQ71jzKd9YiJ+j3/nXq7gRAIiIsy0EWSQkcNO+1s5dG2QDniS9/IYQY9Ig4dPRMhhfJyfchsf5VgsnXG33lsuHdxou6xp0BqKdP06f0MCfsUZ3MzxdGj1+Nc+EGMZ4u28nY08wI+5i5+PRxgfjxibTlzTf4c2zhUMAV2rescTnM03+AM6M6gvJ7hEWA7gdE5nO2u4h3tYzUZGUrQ9AmyJ+xjl0LVSRMDTnMtVnE88w6GiiVfHGObzOl7HRWziYR5hFWt4gg2MAjudunE0i4aAzsGlPTbxJzzOxRjCGb7PZIY4m0aM/TmVU4FtrGctj7OaAH8A9QajOUaaqeTEn8fv0qadneUjJqRNOOknWX8TYrmY/AZAGQwe92OJptlPy/Mso5Gjouv8li0Wn5t5K8sJMD30IE4Fk08LH0tMROQ8uZimAhPQuSEd4bOGc/lbhmkR57KAkMFLy3iDeU8KHI0FOmkg+rT5F/6QH+DhEQ1ggQqTc5+jHLrBQCdThfk8wDm8n8fxMXT6CrWHpY0lyA1rAT2lmjINuMXH8guup8Or2A9D1JdarcFwJK8kZhvbsZhZHvFkHe8LWTLtmgSGHVzDFsfpHaTKVj2S4t1xXMUwFktnmlpB3o9VXM5b0z3wZnw7gQGGWJVZ5djAUlDabg7Ur+ZrbMFiaRcOdUyYFvt28ACf4PB0X2YCdQL0agEtdces5GP/tXyFp7FYIsIc6tRZUHfSrzdzHe9kQbovXkFAHyKgm9UYTqA+gk/ySApCZ1KnSTFYR+PbuJ+LOLBnqA0wh59nAr2eVwro5kGdxI+FnM+tvDDu1cVHkLHsvo7PcUQKtRHQUn5Qwwlcwk+7uqw7RAXGkIlcvYErONI5UxtgH36RCfRzArrJDcWxVL2QU7mch9nZhXVYMNYWy3NcykG4DDsywL48JKCl7KbimFcP8WYu5naeGkckCSLFgB3RxmL5DX9KK9OnXYCOBLQ0hkv3ksKH80dcxk/YPCmIFOHYY03FOzgpDULTAT2Xhx2APlhASxNYT0wONodlvIcrWMnGSX5dDNRb+DvmMHUProCWZoW139V8PI4P8h+sHkepk7tXJ5Xq2zhyyrpHAvQjmUA/K6Cl6RuNY3gt5k1cwn3jDcf8S3qWZzl3CqQNME9AS/lgPeHYAafwrzzvdNdKr482lpBP7JboBbRUuF9/bTwm5PtIGp5fY+4eadoA8/mlgJ5KuoZ7lSUiwjKEX9jgTB8I+RDf4qV7WSlXo6EFdAFKJgor7nMgoMO7uJVXEs9oDLUV0FKvih2fNTO4WoS8ie/tZfVbebSALih+uB1jQ5z2NPamgDYn8G2WTlqj3OVOGyugpV5DgQs2FljHJrx0sseox5t0hwg5gVs5lGgcaSOHFtCD9PBP8RrO5rOs4EV8fGxPs1cHhBzHjby8C2lpmsMlFZ2hd/Isz3IrcBTv4Gzegocldl42IqDN67mJs9mE39PFIIeWCgDaxzCEj2ENX+YM3sY3iXpy6iEi3sQ3WZDeq67IIaAH2Ci047Vrj4BRVvA+fp+bsPjOidqnwzu4hpamahTQgwd6wtFDDD4eK3kv7+bBdNJeF7UIOZ8riYW0gB5s5LC7fRcR4+FzC2/nMjp4jotnBHT4MJeyWQdejcJBOvRUl0LAZj7FCq7kCMcZrANiLmY7Izr0cujBOfRUSuLHD3krtxA4dbsks0P/I6/SmRPQZYkcu8ePZPGMf05LedlIQ8A+OvQCulyRo9unfeCTXITFOBXyrKZgFNDlBTqZ7jfgS3wYi+/k0loaWUCXMEN3XxghAdfyPnbk+KqNlKocM5Xb4CR3H4/wuZ6Ar+NNO/dzL/snh5YG4tAJ9jEB1/Gx9D5FSUCXNENb51eLCLiazzolaUlA5w5znPtrRgR8gWvxHXsPJQGdM9Qmd6QtH+d/CTRQVEBXOUNPIO0xzJ/zNEbBQ0BXOUOPKSLgMS7CqAtFQJcR6N4VEXAz/zaL+1PUsSLNAJm4sAslwuPvWUWg2CGg++fOtsBXN2zlbxh1GrIkjxbQfWwUzgzICJ+7+GqBE44JaKmPOTpx6c/zRM/dLEZAS2WDOXF2jxf4Bx1mAd1PoE3BSN/ACjx1sgjo6jt0Ejo6fIE2psdtqWwnFdYonA32ET4rWI6n8p2Ars/nwOV0el7kXmU7qZSK8LiP7znebyiH1iEoPEPbHM7R1Yz2nKMFtFRij763xxytyCEN1Men+3uPUb5BrFlHBXS5UXX3aLiFJ1XrENB1uXA8tvDdHi4hVTmkGah/fmmAGxnV+RLQ9bl0fslKFe8EdB0yNFgCdnI7qHQnoOsAdLKtuxl2HB+tsRxSYUDng32M4WEec+5eUaNQKrlD+2xnpUKHgK4H0MnW7tM5E9DFIta/dbct8H8MO4UJZWip9A4dA+v4FZpBWkDXAmjwCHlIKVpAF+mZ/ZQBHnMEWlUOqSCHztdPfwV4ma+pDC1VIHIArGNYZ01A1wNoC2zleYcta7SdVCjQNrftbWaDmoUCuh6NQvAY4UUBLaDrEUwshpiNTq+pyCFVoFFogI2guwsFdDGRww4ArecEtIAepEPn7ePbHJ1cQEs9Az2IDo6RgXwuCGg5dEFbHKEjoAV0PYBOHDrUtGACuqhGYf+x3+V057fKdlIF3BlgVFMZCOiiHLrf6Fug7bBdVTmkGeE1CJ8OdceKgK5T7AjVIBTQxTUKTd+xjwS0gK6TQ8cCWkA3TWoUSoV5pfxUQCtyyH0F9CCAHoRD+05nTT2FUkUcWudMB6dWQPsKHQK6TkAHDmctbmpvooCuloyjQze2siKgi28U5h85XBw6EtBSNSJHy8GhIwEtVUVZkcMCkTK0VBUfd2kUhoQCWioG1fyBNg5Ax81sGgro+kWOJEM3tM4hoGfn0HYAPujjZY7D7ghoqSqRw8WhYwEtVUGG7Dq0qhxSoQ49iHOmnkKpMth7Tl3fihzSDBuF/R775rK9xk50IKCr1yiUBHShDl3Gy0iRQ6pMo9ClJOfrFixpJmgNAuvIackgAS1VIHJYsue2c70JQEBLpWgUtokzJzwfauqZFdCzgXkwHcwu80PvQ0AjpzIQ0NWrN2QBbYC57CuHlqpxCe10GLy/L3MEtNSrBhM5RjId2rIviwS01DvQg3DoHezMiDsWjyXK0FIRGTr/KscOdjg860A5tNQ70INYvn6EYYdL6BABLRXj0Plu0RDzvMO2D0M3yUq5Z2iTu4sbYL3Dcw7HJ25eihbQVYscAM85AL2UJYocUtkjR6J1Dnu2iGMBX0BL+Tp03i5ugbUZZ84Q0eIkObRUDYd+hpHM4UlwchNTtIAuslFoC7qINvB0xqt7wGs4WEBLZXdoC2zntxlbN0Qs4yQQ0FK+GTp/BXR4NBNoi+EMGleLFtCzixwTD9v1KN7HH0qhnVo+cCZLmhY6BPRsZJiDh4+Hh0kfCcIxMRExUQHzgFpgDVsySnKGmJdxTtPOsYCeDVajrOZRHmMtz7GJ7exKB98bPDx8fHyGCApoiq7hicxGqQU+yPzMmUprpUBkzgLo53gXAQYfnxZzaKX/Tx5DeAwxl6dyjh2WgO38jBMznucTcRJnciMtOjphUnnlY/hjLNGk5L7nI8RyL3OcZsOTJBhPzknI8LqixsSjiK3CEtZjd2uM7vmIsHyABnaBS1W7kOAGYkIHoH/LAZimtJZ05Vb1vFk83oPNANUQsj/zWY7f3BlJpfLLAw7icSePDulwlsxLKrcC4ItYOhlAJzn7tyxFRVqp5GHxtWwhymwYJtWOFcxvTpKWqor09SmuWY8Olq+nvZqSVNocfTK7MqvREy79ZcBTlpbKjPQ3HT06poPly+lku5JU2hy9LR0C5RY8ruclQloqM9JXONU6EpcOsazkNVBQH6YkzTJ0GJbwFLGjRyfob+BCfKClMR5SGXP0Bxxz9ATSlpvS0Xq+hi5JZYsdPt9xjh1J9IiwvMAXWZq+QiCopTJ59JE84zCctPvRxmLZwOc4evzCkFdLpWkanp/e9GV78OkkpmzkOs5jYfpahoCguatoSeVQAFw+7ru9QN1Ju10e5yrO5OVd9zD5Kdpe4c5tZvmYGItudB3WQwaPfbiRMwl7vq0uJh535Gd4kNWs4kmeZusU8WZsi2Oa+i53O4gDIdUlScccyH9z/AyQTrC2XYOXNrCBp3iMdazjWTazma0OSxVNTVn3jbpmEnlel8+avbg1u33FpN956b/JVwG7BHS9kD6G21hKNONOkySDe11ObOmwi61sZpitbGOUDjsZpUOMxcPQokWLIfy0WemnYWXsZjQvHRSVDIwyKcKk/038rPu3kxH2dvuKLvwZ/0nMHH4ioOuVpENO4LsspUNrFq/TPV1OtSoftwvoutU7Ik7kZpbNMHhMBfjEf8n33bM2mdwj7cz+KiLgu5qXo16KaLGKs7mBY3JE2lSitWWAtoZ7100dAh7mHfyQgLhxN8aOCuj6KcTnGd7JVXh4Dgvd10ltDSGsoyw+IbfxFG9gv3S2vSa8a4/75dB1zdIGn//kVJbj49FpyDzRo3LoOjtWwEZu5FmO4gAM0fh0v/V16HsEdJ0V42F5gO/R5tXMxdCpMdQWj/8R0HV3aWixmTu5hRbLWIAhrGmmtnisENDN8GmfjfyAOxjmIBZjIF1ZwNQM6B8J6Gb4dIyHx3ru5Ds8yjyWMISHISSuDdYWjzsEdHOgtnj4bGU113Ebv8NnPvPxMOn8d4lMpYFerrEcTZOHSTtbAo7jZH6fkziya3TdWO+i6RoTV972QbcifD4qoJuKtTe+PtdLOZwTOZFXcygLmLdHAt9zGJLpGbY8B/ubSV/b8csuxuMjArq5SsYUd4/3eAWHsYxDWcbLWMxi9mNh6ZeVGlsnMiLE5y8FtDQWLmwX2gELWchcFrOYAziAuSxkMQtosQ/7MJQO6vfTv56YEDIipkNEhw4hHaIUtg4d2oREhOmtud2DUZMMv/tkOXF6z2NESJT+5dgrxOOvHKZTuodEWNb+P8+w0sfrWAXAAAAAAElFTkSuQmCC");
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213;--bg-2:#241d1f;--fg:#d6c8bf;--fg-strong:#f4eae3;--muted:#a69489;
+    --line:rgba(214,200,191,.2);--accent:#e48f9b;--on-accent:#2a0d13;
+    --band-bg:#0c0809;--shadow:rgba(0,0,0,.7);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213;--bg-2:#241d1f;--fg:#d6c8bf;--fg-strong:#f4eae3;--muted:#a69489;
+  --line:rgba(214,200,191,.2);--accent:#e48f9b;--on-accent:#2a0d13;
+  --band-bg:#0c0809;--shadow:rgba(0,0,0,.7);color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--font-body);font-size:1.0625rem;line-height:1.65;font-weight:400;
+  overflow-x:clip;-webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3,p,figure,ul,ol,dl,dd{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{
+  width:100%;max-width:1280px;margin-inline:auto;
+  padding-left:max(clamp(16px,4vw,48px),env(safe-area-inset-left,0px));
+  padding-right:max(clamp(16px,4vw,48px),env(safe-area-inset-right,0px));
+}
+section{padding-block:clamp(4rem,9vw,8rem)}
+h2{
+  font-family:var(--font-display);font-weight:400;color:var(--fg-strong);
+  font-size:clamp(2.3rem,5.2vw,4.1rem);line-height:1.04;letter-spacing:.015em;text-wrap:balance;
+}
+.lede{font-size:clamp(1.125rem,1.8vw,1.35rem);line-height:1.6;max-width:34rem;text-wrap:pretty}
+.tag{
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  border:1px solid var(--line);padding:.28rem .6rem;color:var(--muted);white-space:nowrap;
+}
+
+/* logo as mask */
+.logo{display:inline-block;aspect-ratio:500/477;background:currentColor;
+  -webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
+
+/* ---------- header ---------- */
+.site-head{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.site-head .wrap{display:flex;align-items:center;gap:1rem;min-height:3.8rem}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--fg-strong);margin-right:auto}
+.brand .logo{width:2.1rem}
+.brand span{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;font-weight:500}
+.nav{display:flex;gap:clamp(.9rem,2.4vw,2rem)}
+.nav a{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg);position:relative;padding-block:.3rem}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.nav a:hover::after{transform:scaleX(1)}
+.theme-btn{width:2.4rem;height:2.4rem;border:1px solid var(--line);background:transparent;cursor:pointer;display:grid;place-items:center;transition:background .3s}
+.theme-btn:hover{background:var(--bg-2)}
+.theme-btn svg{width:1.05rem;height:1.05rem}
+.bar{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(var(--sp,0));transform-origin:left}
+@media (max-width:640px){.nav a:not(.keep){display:none}.brand span{letter-spacing:.2em}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-block:clamp(2.5rem,6vw,5rem) clamp(3.5rem,8vw,7rem);overflow:clip}
+.wm{position:absolute;right:-6%;top:50%;width:min(62vw,720px);translate:0 -50%;color:var(--fg);opacity:.07;pointer-events:none;animation:wmIn 2.4s ease .2s both}
+@keyframes wmIn{from{opacity:0;scale:.94}to{opacity:.07;scale:1}}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(2.5rem,5vw,5rem);align-items:center}
+.hero h1{
+  font-family:var(--font-display);font-weight:400;color:var(--fg-strong);
+  font-size:clamp(2.7rem,6.4vw,5.6rem);line-height:1;letter-spacing:.03em;text-transform:uppercase;
+  display:flex;flex-wrap:wrap;column-gap:.32em;
+}
+.hero .w{display:inline-block;overflow:hidden;padding-bottom:.06em}
+.hero .w>span{display:inline-block;transform:translateY(112%);animation:rise 1.1s var(--ease) both;animation-delay:calc(.3s + var(--i)*.1s)}
+@keyframes rise{to{transform:none}}
+.hero .sub{margin-top:1.4rem;font-size:clamp(1.05rem,2.2vw,1.5rem);letter-spacing:.34em;text-transform:uppercase;font-weight:300;color:var(--fg);animation:fadeUp 1s var(--ease) .75s both}
+.hero .tagline{margin-top:1.4rem;font-style:italic;font-weight:300;font-size:1.2rem;color:var(--muted);animation:fadeUp 1s var(--ease) .9s both}
+.hero .cta{margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:.8rem;animation:fadeUp 1s var(--ease) 1.05s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.5rem;text-decoration:none;cursor:pointer;
+  font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;border:1px solid var(--fg-strong);
+  background:var(--fg-strong);color:var(--bg);position:relative;overflow:hidden;isolation:isolate;transition:color .45s var(--ease)
+}
+.btn::before{content:"";position:absolute;inset:0;background:var(--bg);transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}
+.btn:hover{color:var(--fg-strong)}.btn:hover::before{transform:none}
+.btn.ghost{background:transparent;color:var(--fg-strong)}
+.btn.ghost::before{background:var(--fg-strong)}
+.btn.ghost:hover{color:var(--bg)}
+
+.stack{position:relative;width:100%;max-width:500px;margin-inline:auto;aspect-ratio:4/5.1}
+.card{
+  position:absolute;width:74%;aspect-ratio:4/5;background:var(--bg-2);
+  box-shadow:0 30px 60px -28px var(--shadow);
+  rotate:var(--r);
+  translate:calc(var(--mx,0) * var(--k) * 1px) calc(var(--my,0) * var(--k) * 1px);
+  animation:deal 1.2s var(--ease) both;animation-delay:var(--d);
+  transition:translate .6s var(--ease);
+}
+.card img{width:100%;height:100%;object-fit:cover}
+.c1{--r:-7deg;--k:-6;--d:.55s;left:0;top:9%}
+.c2{--r:6deg;--k:8;--d:.75s;right:0;top:0}
+.c3{--r:-1.5deg;--k:14;--d:.95s;left:12%;top:20%}
+@keyframes deal{from{opacity:0;transform:translateY(60px) scale(.9)}to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .stack{max-width:380px}
+  .wm{width:90vw;right:-25%;top:30%}
+}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding-block:0}
+.track{display:flex;width:max-content;animation:slide 46s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.track ul{display:flex;flex:none}
+.track li{display:flex;align-items:center;gap:1.8rem;padding:1.15rem 0 1.15rem 1.8rem;font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;white-space:nowrap}
+.track li::after{content:"";width:6px;height:6px;rotate:45deg;background:var(--accent)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- reveal ---------- */
+.js .rv{opacity:0;transition:opacity .9s var(--ease) var(--d,0s),transform 1.05s var(--ease) var(--d,0s),clip-path 1.2s var(--ease) var(--d,0s)}
+.js .rv[data-rv="up"]{transform:translateY(36px)}
+.js .rv[data-rv="wipe-l"]{clip-path:inset(-60px 100% -60px -60px);opacity:1}
+.js .rv[data-rv="wipe-r"]{clip-path:inset(-60px -60px -60px 100%);opacity:1}
+.js .rv.in{opacity:1;transform:none;clip-path:inset(-60px)}
+
+/* ---------- frames (clickable layout images) ---------- */
+.frame{
+  position:relative;display:block;width:100%;padding:0;border:0;overflow:hidden;background:var(--bg-2);
+  box-shadow:0 26px 50px -30px var(--shadow);cursor:zoom-in;
+}
+.frame img{width:100%;height:100%;object-fit:cover;transition:scale .9s var(--ease)}
+.frame:hover img{scale:1.04}
+.frame[data-pz] img{scale:1.12}
+.frame[data-pz]:hover img{scale:1.16}
+.frame .tag{position:absolute;left:.7rem;top:.7rem;background:rgba(20,12,12,.55);color:#f3e8e1;border-color:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.cap{margin-top:.9rem;font-size:.9rem;color:var(--muted);display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap}
+.cap b{font-weight:500;color:var(--fg-strong);letter-spacing:.06em}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,6rem);align-items:start}
+.stat{display:flex;align-items:baseline;gap:1rem;margin-block:1.6rem 1.2rem;flex-wrap:wrap}
+.stat .num{font-family:var(--font-display);font-size:clamp(5.5rem,13vw,10rem);line-height:.9;color:var(--fg-strong);font-variant-numeric:tabular-nums}
+.stat .num sup{font-size:.5em;color:var(--accent);vertical-align:top;position:relative;top:.1em;margin-left:.04em}
+.stat p{font-size:1.05rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--fg-strong)}
+.skills{margin-top:2.4rem;border-top:1px solid var(--line)}
+.skills div{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr);gap:1rem;padding-block:1rem;border-bottom:1px solid var(--line)}
+.skills dt{font-family:var(--font-display);font-size:1.35rem;color:var(--fg-strong);line-height:1.2}
+.skills dd{font-size:.98rem}
+.collage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.7rem,1.6vw,1.4rem);align-items:start}
+.collage .a{margin-top:0}.collage .b{margin-top:clamp(1.5rem,5vw,4.5rem)}.collage .c{margin-top:clamp(.7rem,2.5vw,2.2rem)}
+.collage .frame{aspect-ratio:4/5}
+@media (max-width:900px){
+  .about-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .collage{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .collage .c{grid-column:1/-1;justify-self:center;width:62%;margin-top:0}
+  .skills div{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ---------- album design rail ---------- */
+.head-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1.6rem 3rem;margin-bottom:clamp(2rem,4vw,3.2rem)}
+.head-row .lede{margin-top:1.2rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chips li{border:1px solid var(--line);padding:.5rem 1rem;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-strong);transition:background .35s,color .35s,border-color .35s}
+.chips li:hover{background:var(--fg-strong);color:var(--bg);border-color:var(--fg-strong)}
+.rail-ctl{display:flex;align-items:center;gap:1rem;margin-top:1.8rem}
+.rail-ctl .prog{flex:1;height:1px;background:var(--line);position:relative}
+.rail-ctl .prog i{position:absolute;left:0;top:-1px;height:3px;background:var(--accent);width:20%;transition:left .15s linear,width .15s linear}
+.arrow{width:2.8rem;height:2.8rem;border:1px solid var(--line);background:transparent;cursor:pointer;display:grid;place-items:center;transition:background .3s,color .3s,opacity .3s}
+.arrow:hover{background:var(--fg-strong);color:var(--bg)}
+.arrow[disabled]{opacity:.35;cursor:default;pointer-events:none}
+.arrow svg{width:1.1rem;height:1.1rem}
+.rail{display:flex;gap:clamp(1rem,2vw,1.6rem);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:1.4rem;scrollbar-width:none;cursor:grab;overscroll-behavior-x:contain}
+.rail::-webkit-scrollbar{display:none}
+.rail.drag{cursor:grabbing;scroll-snap-type:none}
+.rail li{flex:0 0 clamp(230px,27vw,330px);scroll-snap-align:start;min-width:0}
+.rail .frame{aspect-ratio:4/5}
+
+/* ---------- wedding albums (dark band) ---------- */
+.band{
+  background:var(--band-bg);color:var(--band-fg);position:relative;overflow:clip;
+  --fg:var(--band-fg);--fg-strong:#fff;--muted:var(--band-muted);--line:rgba(239,229,222,.24);--accent:#e48f9b;--bg:var(--band-bg);
+}
+.band .wm2{position:absolute;left:-8%;bottom:-18%;width:min(60vw,640px);color:#fff;opacity:.05;pointer-events:none}
+.band-grid{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(2.5rem,7vw,7rem);align-items:center}
+.band .frame{aspect-ratio:4/5;max-width:520px;box-shadow:0 40px 80px -30px #000}
+.phrases{margin-block:2rem 2.2rem;display:grid;gap:.2rem}
+.phrases li{font-family:var(--font-display);font-size:clamp(1.8rem,3.8vw,3rem);line-height:1.15;color:var(--band-fg);padding-block:.5rem;border-bottom:1px solid var(--line)}
+.sizes{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1.8rem}
+.sizes span:first-child{font-size:.82rem;color:var(--muted);margin-right:.4rem}
+.band .tag{color:var(--band-fg)}
+@media (max-width:860px){.band-grid{grid-template-columns:minmax(0,1fr)}.band .frame{max-width:420px}}
+
+/* ---------- western ---------- */
+.spreads{display:grid;gap:clamp(1.8rem,4vw,3.2rem)}
+.spreads figure{width:min(100%,940px)}
+.spreads figure:nth-child(even){margin-left:auto}
+.spreads .frame{aspect-ratio:2/1}
+
+/* ---------- stories (tabs) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;border-bottom:1px solid var(--line);margin-bottom:clamp(2rem,4vw,3.4rem)}
+.tabs button{
+  background:none;border:0;cursor:pointer;padding:1rem clamp(.9rem,2.2vw,1.8rem);position:relative;
+  font-family:var(--font-display);font-size:clamp(1.25rem,2.6vw,1.85rem);color:var(--muted);transition:color .3s
+}
+.tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .5s var(--ease)}
+.tabs button[aria-selected="true"]{color:var(--fg-strong)}
+.tabs button[aria-selected="true"]::after{transform:scaleX(1)}
+.tabs button:hover{color:var(--fg-strong)}
+.panel-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(2rem,5vw,5rem);align-items:start}
+.panel-info{position:sticky;top:6rem}
+.panel-info h3{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.1;color:var(--fg-strong)}
+.panel-info p{margin-top:1rem}
+.panel-info .tag{display:inline-block;margin-top:1.4rem}
+.panel .list{display:grid;gap:clamp(1rem,2vw,1.6rem)}
+.panel .frame.s3{aspect-ratio:3/1}
+.panel .frame.s2{aspect-ratio:2/1}
+.panel.enter .list>*{animation:panelIn 1.1s var(--ease) both;animation-delay:calc(var(--i)*.14s)}
+.panel.enter .panel-info{animation:fadeUp .9s var(--ease) both}
+@keyframes panelIn{from{opacity:0;clip-path:inset(-60px 100% -60px -60px);transform:translateX(-24px)}to{opacity:1;clip-path:inset(-60px);transform:none}}
+@media (max-width:860px){.panel-grid{grid-template-columns:minmax(0,1fr)}.panel-info{position:static}}
+
+/* ---------- process ---------- */
+.steps{position:relative;display:grid;gap:clamp(2rem,5vw,3.6rem);margin-top:clamp(2.5rem,5vw,4rem)}
+.steps .line{position:absolute;left:50%;top:1.7rem;bottom:1.7rem;width:1px;background:var(--line);translate:-.5px 0}
+.steps .line i{display:block;height:100%;background:var(--accent);transform-origin:top;transform:scaleY(var(--p,0))}
+.step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 3.4rem minmax(0,1fr);gap:clamp(1rem,3vw,2.6rem);align-items:start}
+.step .dot{
+  grid-column:2;grid-row:1;width:3.4rem;height:3.4rem;border-radius:50%;display:grid;place-items:center;
+  background:var(--bg);border:1px solid var(--fg);color:var(--fg-strong);font-weight:500;transition:background .5s var(--ease),color .5s,border-color .5s,scale .5s var(--ease)
+}
+.step.on .dot{background:var(--accent);border-color:var(--accent);color:var(--on-accent);scale:1.1}
+.step .txt{grid-column:3;grid-row:1;padding-top:.2rem}
+.step:nth-child(even) .txt{grid-column:1;text-align:right}
+.step h3{font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.2vw,2.4rem);line-height:1.1;color:var(--fg-strong);letter-spacing:.04em;text-transform:uppercase}
+.step p{margin-top:.5rem;max-width:20rem}
+.step:nth-child(even) p{margin-left:auto}
+@media (max-width:640px){
+  .steps .line{left:1.7rem}
+  .step{grid-template-columns:3.4rem minmax(0,1fr)}
+  .step .dot{grid-column:1}
+  .step .txt,.step:nth-child(even) .txt{grid-column:2;text-align:left}
+  .step:nth-child(even) p{margin-left:0}
+}
+
+/* ---------- contact ---------- */
+.contact{position:relative;overflow:clip;border-top:1px solid var(--line)}
+.contact .wm{right:auto;left:50%;translate:-50% -50%;width:min(70vw,640px);animation:none;opacity:.06}
+.contact-in{position:relative;text-align:center}
+.contact h2{font-size:clamp(2.6rem,7vw,5.6rem);text-transform:uppercase;letter-spacing:.04em}
+.contact .services-line{margin-top:1.4rem;font-size:clamp(.85rem,1.6vw,1.05rem);letter-spacing:.24em;text-transform:uppercase}
+.contact-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1.4rem,4vw,3.2rem);align-items:center;max-width:760px;margin:clamp(2.5rem,5vw,4rem) auto 0;text-align:left}
+.tile{width:clamp(7rem,18vw,11rem);aspect-ratio:1;background:var(--navy);color:#fff;display:grid;place-items:center}
+.tile .logo{width:46%}
+.rows{display:grid;gap:.2rem;min-width:0}
+.rows li{display:flex;align-items:center;gap:.9rem;padding-block:.75rem;border-bottom:1px solid var(--line);min-width:0}
+.rows svg{width:1.35rem;height:1.35rem;flex:none;color:var(--accent)}
+.rows a,.rows .val{font-weight:500;letter-spacing:.06em;color:var(--fg-strong);text-decoration:none;overflow-wrap:anywhere;min-width:0;margin-right:auto}
+.rows a:hover{text-decoration:underline;text-underline-offset:4px}
+.copy{border:1px solid var(--line);background:transparent;padding:.32rem .7rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;flex:none;transition:background .3s,color .3s}
+.copy:hover{background:var(--fg-strong);color:var(--bg)}
+.closing{margin-top:clamp(2.5rem,5vw,4rem);font-style:italic;font-weight:300;font-size:1.25rem}
+@media (max-width:560px){.contact-card{grid-template-columns:minmax(0,1fr);justify-items:center}.rows{width:100%}}
+footer{padding-block:1.6rem calc(1.6rem + 0px);border-top:1px solid var(--line);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(10,6,7,.94);display:grid;grid-template-rows:minmax(0,1fr) auto;opacity:0;transition:opacity .45s var(--ease);
+  padding:calc(1rem + env(safe-area-inset-top,0px)) max(1rem,env(safe-area-inset-right,0px)) calc(1rem + env(safe-area-inset-bottom,0px)) max(1rem,env(safe-area-inset-left,0px));color:#f0e6df}
+.lb.show{opacity:1}
+.lb figure{display:grid;place-items:center;min-height:0;min-width:0}
+.lb img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;scale:.96;transition:scale .6s var(--ease),opacity .35s;box-shadow:0 30px 80px -20px #000}
+.lb.show img{scale:1}
+.lb img.swap{opacity:0}
+.lb-bar{display:flex;align-items:center;gap:1rem;padding-top:1rem}
+.lb-bar p{margin-right:auto;font-size:.9rem;min-width:0}
+.lb .arrow{border-color:rgba(255,255,255,.3);color:#f0e6df}
+.lb .arrow:hover{background:#f0e6df;color:#1b1315}
+.lb-close{position:absolute;right:max(1rem,env(safe-area-inset-right,0px));top:calc(1rem + env(safe-area-inset-top,0px));z-index:2;background:rgba(10,6,7,.6)}
+
+/* Respect the device's "reduce motion" setting, unless the visitor turned animations on (data-motion="on") */
+@media (prefers-reduced-motion:reduce){
+  :root:not([data-motion="on"]){scroll-behavior:auto}
+  :root:not([data-motion="on"]) *,:root:not([data-motion="on"]) *::before,:root:not([data-motion="on"]) *::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  :root:not([data-motion="on"]) .marquee{overflow-x:auto}
+  :root:not([data-motion="on"]) .track{animation:none}
+}
+
+/* notice shown when the device has animations switched off */
+.motion-note{
+  position:fixed;z-index:90;left:50%;translate:-50% 0;width:min(560px,calc(100% - 24px));
+  bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;padding:.8rem 1rem;
+  background:var(--fg-strong);color:var(--bg);font-size:.9rem;line-height:1.4;
+  box-shadow:0 18px 40px -16px var(--shadow);
+}
+.motion-note p{flex:1 1 220px;min-width:0}
+.motion-note button{border:1px solid currentColor;background:transparent;color:inherit;padding:.5rem .9rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-weight:500}
+.motion-note button.go{background:var(--bg);color:var(--fg-strong);border-color:var(--bg)}
+</style>
+
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="The Image Layout, back to top"><span class="logo" aria-hidden="true"></span><span>The Image Layout</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#stories">Albums</a>
+      <a href="#process">Process</a>
+      <a class="keep" href="#contact">Contact</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+    </button>
+  </div>
+  <div class="bar" id="bar"></div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-labelledby="h1">
+  <span class="logo wm" aria-hidden="true"></span>
+  <div class="wrap hero-grid">
+    <div>
+      <!-- EDIT: main title. Each word is its own line mask; --i sets the order -->
+      <h1 id="h1"><span class="w"><span style="--i:0">Album</span></span> <span class="w"><span style="--i:1">Design</span></span> <span class="w"><span style="--i:2">Portfolio</span></span></h1>
+      <p class="sub">Wedding Stories</p>
+      <p class="tagline">Crafting memories into timeless designs.</p>
+      <div class="cta">
+        <a class="btn" href="#stories">See the albums</a>
+        <a class="btn ghost" href="#contact">Start your album</a>
+      </div>
+    </div>
+    <div class="stack" id="stack" aria-hidden="true">
+      <div class="card c1"><img src="img/svc-traditional.jpg" width="1440" height="1800" alt=""></div>
+      <div class="card c2"><img src="img/who-groom-maroon.jpg" width="720" height="900" alt=""></div>
+      <div class="card c3"><img src="img/wedding-veil.jpg" width="1200" height="1500" alt="" fetchpriority="high"></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <ul><li>Wedding</li><li>Pre-Wedding</li><li>Traditional</li><li>Western</li><li>Bride album</li><li>Groom album</li><li>Haldi &amp; Mehndi</li><li>Photo editing</li><li>Creative layouts</li></ul>
+    <ul><li>Wedding</li><li>Pre-Wedding</li><li>Traditional</li><li>Western</li><li>Bride album</li><li>Groom album</li><li>Haldi &amp; Mehndi</li><li>Photo editing</li><li>Creative layouts</li></ul>
+  </div>
+</div>
+
+<!-- ================= WHO WE ARE ================= -->
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap about-grid">
+    <div>
+      <h2 id="about-h" class="rv" data-rv="up">Who we are</h2>
+      <div class="stat rv" data-rv="up" style="--d:.1s">
+        <!-- EDIT: change data-to for a different number -->
+        <span class="num" id="years" data-to="5">5<sup>+</sup></span>
+        <p>Years of experience</p>
+      </div>
+      <p class="lede rv" data-rv="up" style="--d:.15s">We specialize in wedding album design, creative layouts, and photo editing, bringing a unique visual style to every story.</p>
+      <dl class="skills rv" data-rv="up" style="--d:.2s">
+        <div><dt>Album design</dt><dd>Wedding, pre-wedding, traditional and western albums.</dd></div>
+        <div><dt>Photo editing</dt><dd>Colour, tone and photo enhancement.</dd></div>
+        <div><dt>Creative layouts</dt><dd>Layouts with balance and storytelling.</dd></div>
+      </dl>
+    </div>
+    <div class="collage">
+      <div class="a rv" data-rv="wipe-l"><button class="frame" data-pz data-lb data-src="img/who-groom-bw.jpg" data-cap="Groom portrait layout, 15X30" aria-label="Open groom portrait layout full size" style="aspect-ratio:4/5"><img src="img/who-groom-bw.jpg" width="720" height="900" alt="Black and white groom portrait with a layout of red and pink turban portraits" loading="lazy" decoding="async"><span class="tag">15X30</span></button></div>
+      <div class="b rv" data-rv="wipe-l" style="--d:.15s"><button class="frame" data-pz data-lb data-src="img/who-groom-maroon.jpg" data-cap="Groom getting-ready layout, 15X30" aria-label="Open maroon groom layout full size"><img src="img/who-groom-maroon.jpg" width="720" height="900" alt="Maroon album layout with groom portraits in a grey suit" loading="lazy" decoding="async"><span class="tag">15X30</span></button></div>
+      <div class="c rv" data-rv="wipe-l" style="--d:.3s"><button class="frame" data-pz data-lb data-src="img/who-mockup.jpg" data-cap="Album mockup, 12X36" aria-label="Open album mockup full size"><img src="img/who-mockup.jpg" width="1200" height="1500" alt="Open wedding album mockup on a maroon background" loading="lazy" decoding="async"><span class="tag">12X36</span></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES: ALBUM DESIGN ================= -->
+<section id="services" style="padding-top:0" aria-labelledby="svc-h">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <h2 id="svc-h" class="rv" data-rv="up">Album design</h2>
+        <p class="lede rv" data-rv="up" style="--d:.1s">One studio for every kind of wedding story, from a traditional vidhi to a modern western shoot.</p>
+      </div>
+      <ul class="chips rv" data-rv="up" style="--d:.15s">
+        <li>Wedding</li><li>Pre-Wedding</li><li>Traditional</li><li>Western</li>
+      </ul>
+    </div>
+    <!-- EDIT: each <li> is one layout card. Change the image, caption and size tag. -->
+    <ul class="rail" id="rail" aria-label="Layout samples, scroll sideways">
+      <li><button class="frame" data-lb data-src="img/svc-traditional.jpg" data-cap="Traditional wedding layout, 12X36" aria-label="Open traditional layout full size"><img src="img/svc-traditional.jpg" width="1440" height="1800" alt="Traditional wedding ceremony layout on an amber background" loading="lazy" decoding="async" draggable="false"></button><p class="cap"><b>Traditional</b><span class="tag">12X36</span></p></li>
+      <li><button class="frame" data-lb data-src="img/svc-groom.jpg" data-cap="The groom, layout in olive and black, 12X36" aria-label="Open groom layout full size"><img src="img/svc-groom.jpg" width="720" height="900" alt="Groom portrait layout on a dark olive background" loading="lazy" decoding="async" draggable="false"></button><p class="cap"><b>The Groom</b><span class="tag">12X36</span></p></li>
+      <li><button class="frame" data-lb data-src="img/svc-bride.jpg" data-cap="The bride, layout in maroon, 12X36" aria-label="Open bride layout full size"><img src="img/svc-bride.jpg" width="720" height="900" alt="Bride portrait layout in a pink saree on a maroon background" loading="lazy" decoding="async" draggable="false"></button><p class="cap"><b>The Bride</b><span class="tag">12X36</span></p></li>
+      <li><button class="frame" data-lb data-src="img/who-groom-maroon.jpg" data-cap="Groom getting ready, 15X30" aria-label="Open getting-ready layout full size"><img src="img/who-groom-maroon.jpg" width="720" height="900" alt="Maroon layout with the groom getting ready" loading="lazy" decoding="async" draggable="false"></button><p class="cap"><b>Getting ready</b><span class="tag">15X30</span></p></li>
+      <li><button class="frame" data-lb data-src="img/who-groom-bw.jpg" data-cap="Groom portraits, 15X30" aria-label="Open groom portraits layout full size"><img src="img/who-groom-bw.jpg" width="720" height="900" alt="Groom portraits with a black and white backdrop" loading="lazy" decoding="async" draggable="false"></button><p class="cap"><b>Groom portraits</b><span class="tag">15X30</span></p></li>
+      <li><button class="frame" data-lb data-src="img/who-mockup.jpg" data-cap="Album mockup, 12X36" aria-label="Open album mockup full size"><img src="img/who-mockup.jpg" width="1200" height="1500" alt="Open album mockup showing a couple in yellow and white" loading="lazy" decoding="async" draggable="false"></button><p class="cap"><b>Album mockup</b><span class="tag">12X36</span></p></li>
+    </ul>
+    <div class="rail-ctl">
+      <button class="arrow" id="prev" type="button" aria-label="Previous layouts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="prog" aria-hidden="true"><i id="prog"></i></div>
+      <button class="arrow" id="next" type="button" aria-label="Next layouts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WEDDING ALBUMS (dark band) ================= -->
+<section class="band" aria-labelledby="wa-h">
+  <span class="logo wm2" aria-hidden="true" data-par="0.12"></span>
+  <div class="wrap band-grid">
+    <div class="rv" data-rv="wipe-l"><button class="frame" data-pz data-lb data-src="img/wedding-veil.jpg" data-cap="Bridal veil layout, 12X36" aria-label="Open bridal veil layout full size"><img src="img/wedding-veil.jpg" width="1200" height="1500" alt="Black and white bridal portrait behind a veil with colour spreads below" loading="lazy" decoding="async"></button></div>
+    <div>
+      <h2 id="wa-h" class="rv" data-rv="up">Wedding albums</h2>
+      <ul class="phrases">
+        <li class="rv" data-rv="up" style="--d:.1s">Elegant layouts</li>
+        <li class="rv" data-rv="up" style="--d:.22s">Emotional stories</li>
+        <li class="rv" data-rv="up" style="--d:.34s">Timeless design</li>
+      </ul>
+      <p class="lede rv" data-rv="up" style="--d:.4s">Every layout is balanced around the moments you chose, so the album reads like the day itself.</p>
+      <div class="sizes rv" data-rv="up" style="--d:.5s"><span>Layout sizes</span><span class="tag">12X36</span><span class="tag">15X30</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WESTERN ALBUM ================= -->
+<section aria-labelledby="west-h">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <h2 id="west-h" class="rv" data-rv="up">Western album</h2>
+        <p class="lede rv" data-rv="up" style="--d:.1s">Modern layouts crafted for timeless wedding stories.</p>
+      </div>
+    </div>
+    <div class="spreads">
+      <figure><div class="rv" data-rv="wipe-l"><button class="frame" data-pz data-lb data-src="img/west-1.jpg" data-cap="Western album: Two hearts, one promise" aria-label="Open western spread one full size"><img src="img/west-1.jpg" width="1800" height="900" alt="Couple embracing among purple flowers, spread titled Two hearts, one promise" loading="lazy" decoding="async"></button></div><figcaption class="cap">Two hearts, one promise</figcaption></figure>
+      <figure><div class="rv" data-rv="wipe-r"><button class="frame" data-pz data-lb data-src="img/west-2.jpg" data-cap="Western album: Forever begins with this ring" aria-label="Open western spread two full size"><img src="img/west-2.jpg" width="1800" height="900" alt="Couple in a black suit and lilac gown, spread about the ring" loading="lazy" decoding="async"></button></div><figcaption class="cap">Forever begins with this ring</figcaption></figure>
+      <figure><div class="rv" data-rv="wipe-l"><button class="frame" data-pz data-lb data-src="img/west-3.jpg" data-cap="Western album: paired frames and a full portrait" aria-label="Open western spread three full size"><img src="img/west-3.jpg" width="1800" height="900" alt="Two framed photos beside a full-length couple portrait" loading="lazy" decoding="async"></button></div><figcaption class="cap">Paired frames beside a full-length portrait</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ALBUM STORIES (tabs) ================= -->
+<section id="stories" style="padding-top:0" aria-labelledby="st-h">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <h2 id="st-h" class="rv" data-rv="up">Album stories</h2>
+        <p class="lede rv" data-rv="up" style="--d:.1s">Separate albums for the bride, the groom and the pre-wedding functions.</p>
+      </div>
+    </div>
+    <div class="tabs rv" data-rv="up" role="tablist" aria-label="Album types" id="tabs">
+      <button role="tab" id="t-bride" aria-controls="p-bride" aria-selected="true" type="button">Bride album</button>
+      <button role="tab" id="t-groom" aria-controls="p-groom" aria-selected="false" tabindex="-1" type="button">Groom album</button>
+      <button role="tab" id="t-haldi" aria-controls="p-haldi" aria-selected="false" tabindex="-1" type="button">Haldi &amp; Mehndi</button>
+    </div>
+
+    <!-- EDIT: each .panel holds the description (left) and the spreads (right) -->
+    <div class="panel" id="p-bride" role="tabpanel" aria-labelledby="t-bride">
+      <div class="panel-grid">
+        <div class="panel-info">
+          <h3>The Bride, Janhavi</h3>
+          <p>Velvet maroon, teal and magenta portraits with titles like Haldi Bliss and Vows Eternal.</p>
+          <span class="tag">4 spreads</span>
+        </div>
+        <div class="list">
+          <div style="--i:0"><button class="frame s3" data-lb data-src="img/bride-1.jpg" data-cap="Bride album: The Bride Janhavi" aria-label="Open bride spread one"><img src="img/bride-1.jpg" width="1800" height="600" alt="Bride in a maroon velvet dupatta against green leaves" loading="lazy" decoding="async"></button></div>
+          <div style="--i:1"><button class="frame s3" data-lb data-src="img/bride-2.jpg" data-cap="Bride album: teal spread" aria-label="Open bride spread two"><img src="img/bride-2.jpg" width="1800" height="600" alt="Bride in a pink and green saree with a teal layout" loading="lazy" decoding="async"></button></div>
+          <div style="--i:2"><button class="frame s3" data-lb data-src="img/bride-3.jpg" data-cap="Bride album: Haldi Bliss" aria-label="Open bride spread three"><img src="img/bride-3.jpg" width="1800" height="600" alt="Spread titled Haldi Bliss with bridal portraits" loading="lazy" decoding="async"></button></div>
+          <div style="--i:3"><button class="frame s3" data-lb data-src="img/bride-4.jpg" data-cap="Bride album: Vows Eternal" aria-label="Open bride spread four"><img src="img/bride-4.jpg" width="1800" height="600" alt="Spread titled Vows Eternal with a bride in maroon" loading="lazy" decoding="async"></button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="p-groom" role="tabpanel" aria-labelledby="t-groom" hidden>
+      <div class="panel-grid">
+        <div class="panel-info">
+          <h3>The Groom, Sahil</h3>
+          <p>Getting ready, quiet seated portraits and sherwani details, set against wood and white.</p>
+          <span class="tag">3 spreads</span>
+        </div>
+        <div class="list">
+          <div style="--i:0"><button class="frame s2" data-lb data-src="img/groom-1.jpg" data-cap="Groom album: The Groom Sahil" aria-label="Open groom spread one"><img src="img/groom-1.jpg" width="1800" height="900" alt="Groom getting ready with his sherwani and shoes" loading="lazy" decoding="async"></button></div>
+          <div style="--i:1"><button class="frame s2" data-lb data-src="img/groom-2.jpg" data-cap="Groom album: seated portraits" aria-label="Open groom spread two"><img src="img/groom-2.jpg" width="1800" height="900" alt="Groom seated on a sofa in an ivory sherwani" loading="lazy" decoding="async"></button></div>
+          <div style="--i:2"><button class="frame s2" data-lb data-src="img/groom-3.jpg" data-cap="Groom album: Sahil, The Groom" aria-label="Open groom spread three"><img src="img/groom-3.jpg" width="1800" height="900" alt="Groom in a black embroidered jacket with a red pocket square" loading="lazy" decoding="async"></button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="p-haldi" role="tabpanel" aria-labelledby="t-haldi" hidden>
+      <div class="panel-grid">
+        <div class="panel-info">
+          <h3>Mehndi and haldi</h3>
+          <p>Samiksha's mehndi close-ups, and Rasika &amp; Anish in the yellow of their haldi ceremony.</p>
+          <span class="tag">4 spreads</span>
+        </div>
+        <div class="list">
+          <div style="--i:0"><button class="frame s3" data-lb data-src="img/haldi-2.jpg" data-cap="Mehndi album: henna details" aria-label="Open mehndi spread one"><img src="img/haldi-2.jpg" width="1800" height="600" alt="Bride seated with henna on her hands against a pink and green backdrop" loading="lazy" decoding="async"></button></div>
+          <div style="--i:1"><button class="frame s3" data-lb data-src="img/haldi-1.jpg" data-cap="Mehndi album: Samiksha's mehndi" aria-label="Open mehndi spread two"><img src="img/haldi-1.jpg" width="1800" height="600" alt="Family moments during the mehndi ceremony" loading="lazy" decoding="async"></button></div>
+          <div style="--i:2"><button class="frame s3" data-lb data-src="img/haldi-3.jpg" data-cap="Haldi album: Rasika and Anish" aria-label="Open haldi spread one"><img src="img/haldi-3.jpg" width="1800" height="600" alt="Couple in yellow among green palms" loading="lazy" decoding="async"></button></div>
+          <div style="--i:3"><button class="frame s3" data-lb data-src="img/haldi-4.jpg" data-cap="Haldi album: Haldi Ceremony" aria-label="Open haldi spread two"><img src="img/haldi-4.jpg" width="1800" height="600" alt="Spread titled Haldi Ceremony with a couple among marigolds" loading="lazy" decoding="async"></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section id="process" style="padding-top:0" aria-labelledby="pr-h">
+  <div class="wrap">
+    <h2 id="pr-h" class="rv" data-rv="up">Our process</h2>
+    <p class="lede rv" data-rv="up" style="--d:.1s;margin-top:1.2rem">Five steps, from choosing the photographs to handing over album-ready files.</p>
+    <ol class="steps" id="steps">
+      <div class="line" aria-hidden="true"><i></i></div>
+      <li class="step rv" data-rv="up"><span class="dot">1</span><div class="txt"><h3>Select</h3><p>Choose the right moments &amp; photographs.</p></div></li>
+      <li class="step rv" data-rv="up"><span class="dot">2</span><div class="txt"><h3>Edit</h3><p>Colour, tone &amp; photo enhancement.</p></div></li>
+      <li class="step rv" data-rv="up"><span class="dot">3</span><div class="txt"><h3>Design</h3><p>Creative layouts with balance &amp; storytelling.</p></div></li>
+      <li class="step rv" data-rv="up"><span class="dot">4</span><div class="txt"><h3>Client review</h3><p>PDF preview shared with the client for feedback &amp; approval.</p></div></li>
+      <li class="step rv" data-rv="up"><span class="dot">5</span><div class="txt"><h3>Deliver</h3><p>Final album-ready files.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact" aria-labelledby="ct-h">
+  <span class="logo wm" aria-hidden="true"></span>
+  <div class="wrap contact-in">
+    <h2 id="ct-h" class="rv" data-rv="up">Let's create together</h2>
+    <p class="services-line rv" data-rv="up" style="--d:.1s">Album design &bull; Photo editing &bull; Creative layouts</p>
+    <div class="contact-card rv" data-rv="up" style="--d:.2s">
+      <div class="tile" aria-hidden="true"><span class="logo"></span></div>
+      <!-- EDIT: contact details -->
+      <ul class="rows">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".8" fill="currentColor"/></svg>
+          <a href="https://www.instagram.com/theimagelayout/" target="_blank" rel="noopener">@theimagelayout</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A15 15 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+          <span class="val" id="phone">9022405225</span>
+          <button class="copy" type="button" data-copy="#phone">Copy</button>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
+          <span class="val" id="mail">theimagelayout@gmail.com</span>
+          <button class="copy" type="button" data-copy="#mail">Copy</button>
+        </li>
+      </ul>
+    </div>
+    <p class="closing rv" data-rv="up" style="--d:.3s">Your memories deserve a beautiful layout.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>The Image Layout</span><span>Crafting memories into timeless designs</span></div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Full size layout" hidden>
+  <button class="arrow lb-close" id="lbClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <figure><img id="lbImg" alt=""></figure>
+  <div class="lb-bar">
+    <p id="lbCap"></p>
+    <button class="arrow" id="lbPrev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="arrow" id="lbNext" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var deviceReduces = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var RM = deviceReduces && root.getAttribute('data-motion') !== 'on';
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* ---- notice: device has animations off ---- */
+  if(RM){
+    var note = document.createElement('div');
+    note.className = 'motion-note'; note.setAttribute('role','region'); note.setAttribute('aria-label','Animations');
+    note.innerHTML = '<p>Animations are off because your device has "reduce motion" switched on.</p><button class="go" type="button">Turn on animations</button><button class="no" type="button">Keep off</button>';
+    document.body.appendChild(note);
+    $('.go',note).addEventListener('click',function(){
+      try{ localStorage.setItem('til-motion','on'); }catch(e){}
+      root.setAttribute('data-motion','on'); location.reload();
+    });
+    $('.no',note).addEventListener('click',function(){ note.remove(); });
+  }
+
+  /* ---- theme toggle ---- */
+  try{ var saved = localStorage.getItem('til-theme'); if(saved) root.setAttribute('data-theme',saved); }catch(e){}
+  $('#themeBtn').addEventListener('click',function(){
+    var cur = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light');
+    var next = cur==='dark' ? 'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{ localStorage.setItem('til-theme',next); }catch(e){}
+  });
+
+  /* ---- reveal on scroll ---- */
+  var rvs = $$('.rv'), fired = false;
+  if(RM || !('IntersectionObserver' in window)){ rvs.forEach(function(e){e.classList.add('in')}); }
+  else{
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ fired = true; en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.14,rootMargin:'0px 0px -6% 0px'});
+    rvs.forEach(function(e){io.observe(e)});
+    setTimeout(function(){ if(!fired) rvs.forEach(function(e){e.classList.add('in')}); },2500);
+  }
+
+  /* ---- count up ---- */
+  var yrs = $('#years');
+  if(yrs && !RM && 'IntersectionObserver' in window){
+    var to = +yrs.getAttribute('data-to');
+    var cio = new IntersectionObserver(function(es){
+      if(!es[0].isIntersecting) return; cio.disconnect();
+      var t0 = performance.now(), dur = 1400;
+      (function tick(t){
+        var p = Math.min(1,(t-t0)/dur), v = Math.round(to*(1-Math.pow(1-p,3)));
+        yrs.innerHTML = v + '<sup>+</sup>';
+        if(p<1) requestAnimationFrame(tick);
+      })(t0);
+    },{threshold:.6});
+    cio.observe(yrs);
+  }
+
+  /* ---- scroll effects: progress bar, parallax, process line ---- */
+  var bar = $('#bar'), pzs = $$('[data-pz]'), pars = $$('[data-par]'), steps = $('#steps'), ticking = false;
+  function onScroll(){
+    ticking = false;
+    var vh = window.innerHeight, h = root.scrollHeight - vh;
+    bar.style.setProperty('--sp', h>0 ? Math.min(1,window.scrollY/h) : 0);
+    if(!RM){
+      pzs.forEach(function(f){
+        var r = f.getBoundingClientRect();
+        if(r.bottom<-80 || r.top>vh+80) return;
+        var off = (r.top + r.height/2 - vh/2) / (vh/2 + r.height/2);
+        f.firstElementChild.style.translate = '0 ' + (-off*r.height*0.05).toFixed(1) + 'px';
+      });
+      pars.forEach(function(p){
+        var k = +p.getAttribute('data-par'); p.style.translate = '0 ' + (-window.scrollY*k).toFixed(0) + 'px';
+      });
+    }
+    if(steps){
+      var sr = steps.getBoundingClientRect(), mark = vh*0.62;
+      var p = Math.max(0,Math.min(1,(mark - sr.top)/sr.height));
+      steps.style.setProperty('--p', p.toFixed(3));
+      $$('.step',steps).forEach(function(s){
+        var d = s.querySelector('.dot').getBoundingClientRect();
+        s.classList.toggle('on', d.top + d.height/2 < mark);
+      });
+    }
+  }
+  window.addEventListener('scroll',function(){ if(!ticking){ticking=true; requestAnimationFrame(onScroll);} },{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+
+  /* ---- hero pointer parallax ---- */
+  var stack = $('#stack');
+  if(stack && !RM && matchMedia('(hover:hover)').matches){
+    stack.addEventListener('pointermove',function(e){
+      var r = stack.getBoundingClientRect();
+      stack.style.setProperty('--mx', ((e.clientX-r.left)/r.width-.5).toFixed(3)*2);
+      stack.style.setProperty('--my', ((e.clientY-r.top)/r.height-.5).toFixed(3)*2);
+    });
+    stack.addEventListener('pointerleave',function(){ stack.style.setProperty('--mx',0); stack.style.setProperty('--my',0); });
+  }
+
+  /* ---- layout rail: arrows, progress, drag ---- */
+  var rail = $('#rail'), prev = $('#prev'), next = $('#next'), prog = $('#prog');
+  function railState(){
+    var max = rail.scrollWidth - rail.clientWidth;
+    prev.disabled = rail.scrollLeft < 4; next.disabled = rail.scrollLeft > max - 4;
+    var w = rail.clientWidth / rail.scrollWidth * 100;
+    prog.style.width = w + '%'; prog.style.left = (max>0 ? rail.scrollLeft/max*(100-w) : 0) + '%';
+  }
+  function step(dir){ var li = rail.querySelector('li'); rail.scrollBy({left:dir*(li.offsetWidth+16),behavior:RM?'auto':'smooth'}); }
+  prev.addEventListener('click',function(){step(-1)}); next.addEventListener('click',function(){step(1)});
+  rail.addEventListener('scroll',railState,{passive:true}); window.addEventListener('resize',railState); railState();
+  var down=false,sx=0,sl=0,moved=0;
+  rail.addEventListener('pointerdown',function(e){ if(e.pointerType!=='mouse') return; down=true; sx=e.clientX; sl=rail.scrollLeft; moved=0; });
+  window.addEventListener('pointermove',function(e){
+    if(!down) return; var dx = e.clientX - sx; moved = Math.max(moved,Math.abs(dx));
+    if(moved>6) rail.classList.add('drag'); rail.scrollLeft = sl - dx;
+  });
+  window.addEventListener('pointerup',function(){ if(!down) return; down=false; setTimeout(function(){rail.classList.remove('drag');},0); });
+  rail.addEventListener('click',function(e){ if(moved>6){ e.stopPropagation(); e.preventDefault(); moved=0; } },true);
+
+  /* ---- tabs ---- */
+  var tabs = $$('#tabs [role="tab"]'), storiesSeen = false;
+  function showTab(t,focus){
+    tabs.forEach(function(b){
+      var on = b===t; b.setAttribute('aria-selected',on); b.tabIndex = on?0:-1;
+      var p = document.getElementById(b.getAttribute('aria-controls'));
+      p.hidden = !on; p.classList.remove('enter');
+      if(on){ void p.offsetWidth; if(!RM) p.classList.add('enter'); }
+    });
+    if(focus) t.focus();
+    onScroll();
+  }
+  tabs.forEach(function(b,i){
+    b.addEventListener('click',function(){ showTab(b); });
+    b.addEventListener('keydown',function(e){
+      var n = e.key==='ArrowRight' ? (i+1)%tabs.length : e.key==='ArrowLeft' ? (i-1+tabs.length)%tabs.length : e.key==='Home' ? 0 : e.key==='End' ? tabs.length-1 : -1;
+      if(n>-1){ e.preventDefault(); showTab(tabs[n],true); }
+    });
+  });
+  if('IntersectionObserver' in window && !RM){
+    var sio = new IntersectionObserver(function(es){
+      if(es[0].isIntersecting){ sio.disconnect(); showTab($('#tabs [aria-selected="true"]')); }
+    },{threshold:0,rootMargin:'0px 0px -35% 0px'});
+    sio.observe($('#tabs'));
+  }
+
+  /* ---- lightbox ---- */
+  var lb = $('#lb'), lbImg = $('#lbImg'), lbCap = $('#lbCap'), idx = 0, last = null, items = [];
+  function collect(){ items = $$('[data-lb]').filter(function(b){return b.offsetParent!==null || b.closest('.panel')}); }
+  function setItem(i,anim){
+    collect(); if(!items.length) return;
+    idx = (i+items.length)%items.length; var b = items[idx];
+    function apply(){ lbImg.src = b.getAttribute('data-src'); lbImg.alt = b.querySelector('img').alt; lbCap.textContent = b.getAttribute('data-cap'); lbImg.classList.remove('swap'); }
+    if(anim){ lbImg.classList.add('swap'); setTimeout(apply,180); } else apply();
+  }
+  function open(b){
+    collect(); last = b; var i = items.indexOf(b); lb.hidden = false; setItem(i<0?0:i,false);
+    requestAnimationFrame(function(){ lb.classList.add('show'); }); document.body.style.overflow='hidden'; $('#lbClose').focus();
+  }
+  function close(){
+    lb.classList.remove('show'); document.body.style.overflow='';
+    setTimeout(function(){ lb.hidden = true; lbImg.removeAttribute('src'); },RM?0:420); if(last) last.focus({preventScroll:true});
+  }
+  document.addEventListener('click',function(e){ var b = e.target.closest('[data-lb]'); if(b){ open(b); } });
+  $('#lbClose').addEventListener('click',close);
+  $('#lbPrev').addEventListener('click',function(){ setItem(idx-1,true); });
+  $('#lbNext').addEventListener('click',function(){ setItem(idx+1,true); });
+  lb.addEventListener('click',function(e){ if(e.target===lb || e.target.tagName==='FIGURE') close(); });
+  document.addEventListener('keydown',function(e){
+    if(lb.hidden) return;
+    if(e.key==='Escape') close(); else if(e.key==='ArrowLeft') setItem(idx-1,true); else if(e.key==='ArrowRight') setItem(idx+1,true);
+    else if(e.key==='Tab'){ var f = $$('button',lb); var a = document.activeElement, fi = f.indexOf(a);
+      if(e.shiftKey && fi<=0){ e.preventDefault(); f[f.length-1].focus(); } else if(!e.shiftKey && fi===f.length-1){ e.preventDefault(); f[0].focus(); } }
+  });
+  var tx=null; lb.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',function(e){ if(tx===null) return; var dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx)>50) setItem(idx+(dx<0?1:-1),true); tx=null; });
+
+  /* ---- copy buttons ---- */
+  $$('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el = $(btn.getAttribute('data-copy')), txt = el.textContent.trim();
+      function done(){ var o = btn.textContent; btn.textContent='Copied'; setTimeout(function(){btn.textContent=o},1600); }
+      function fallback(){ var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent='Selected'; setTimeout(function(){btn.textContent='Copy'},1600); }
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,fallback); } else fallback();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
